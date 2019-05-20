@@ -1,0 +1,3 @@
+.resize-triggers, .resize-triggers > div, .contract-trigger:before {
+  min-width: 400px
+}
