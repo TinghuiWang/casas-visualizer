@@ -7,8 +7,7 @@ export default {
     devtool: 'source-map',
     target: 'electron-main',
     entry: {
-        index: './src-electron/index.js',
-        previewPreLoad: './src-electron/previewPreLoad.js'
+        index: './src-electron/index.js'
     },
     output: {
         path: __dirname,
