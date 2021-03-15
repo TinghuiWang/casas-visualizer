@@ -16,6 +16,7 @@ import { createPropsGetter } from '../../utils/props';
 import "../../css/ReactVirtualized.css"
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+import { Moment } from 'moment';
 
 const styles = (theme:Theme) => createStyles({
   autoSizer: {
@@ -52,8 +53,9 @@ interface IStyleProps extends WithStyles<typeof styles> {}
 
 type TReadOnlyProps = {
   rowClassName: string;
-  onRowClick: (info: RowMouseEventHandlerParams) => any;
+  onRowClick: (info: RowMouseEventHandlerParams, timeTag: Moment) => any;
   sensorEvents: Array<TSensorEvent>;
+  selectedIndex: number;
 } & Partial<TDefaultProps>;
 
 type TDefaultProps = Readonly<typeof defaultProps>;
@@ -68,7 +70,8 @@ type TState = {
 
 const defaultProps = {
   rowHeight: 50 as number,
-  headerHeight: 40 as number
+  headerHeight: 40 as number,
+  selectedIndex: 0 as number
 }
 
 const getProps = createPropsGetter(defaultProps);
@@ -161,6 +164,12 @@ class SensorEventTable extends React.Component<TProps, TState> {
     rowSelected: -1
   }
 
+  static getDerivedStateFromProps(nextProps: TProps, prevState: TState) : TState {
+    return {
+      rowSelected: nextProps.selectedIndex
+    };
+  }
+
   getRowClassName = (info:Index) => {
     const { classes, rowClassName, onRowClick } = this.props;
 
@@ -225,7 +234,8 @@ class SensorEventTable extends React.Component<TProps, TState> {
     this.setState((state:TState) => ({
       rowSelected: (state.rowSelected === info.index) ? -1 : info.index
     }));
-    onRowClick(info);
+
+    onRowClick(info, this.props.sensorEvents[info.index]["timeTag"]);
   }
 
   render() {
@@ -244,6 +254,7 @@ class SensorEventTable extends React.Component<TProps, TState> {
             rowCount={sensorEvents.length}
             rowGetter={this.tableRowGetter}
             onRowClick={this.handleRowClick}
+            scrollToIndex={this.state.rowSelected}
             > 
             {sensorEventColumns.map((columnInfo, index) => {
               let dataKey = sensorEventColumns[index].dataKey;

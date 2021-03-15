@@ -18,6 +18,9 @@ import {MuiPickersUtilsProvider, DatePicker, MaterialUiPickersDate} from 'materi
 import "../css/SplitPane.css"
 import SensorEventIllustration from './SensorEventIllustration';
 import { TSplitPane } from '../utils/splitPane';
+import { IconButton, Typography } from '@material-ui/core';
+import Mousetrap from 'mousetrap';
+import moment, { isMoment, Moment } from 'moment';
 
 const drawerWidth = 240;
 
@@ -81,24 +84,66 @@ type TState = {
   floorplanWidth: number;
   floorplanHeight: number;
   selectedEventIndex: number;
+  autoPlay: boolean;
+  timeTag: string;
 }
 
 class DatasetEventPage extends React.Component<TProps, TState> {
   splitpaneRef: React.RefObject<SplitPane>;
+  sensorEventTableRef: any;
+  refreshIntervalId: NodeJS.Timeout | null;
 
   state = {
+    autoPlay: false,
     floorplanWidth: 600,
     floorplanHeight: 400,
-    selectedEventIndex: -1
+    selectedEventIndex: -1,
+    timeTag: ""
   }
 
   constructor(props:TProps) {
     super(props);
     this.splitpaneRef = React.createRef();
+    this.sensorEventTableRef = React.createRef();
+    this.refreshIntervalId = null;
   }
 
   componentDidMount() {
+    Mousetrap.bind("ctrl+d", () => this.toggleAutoPlay());
     this.handleSplitChange();
+  }
+
+  componentWillUnmount() {
+    Mousetrap.unbind("ctrl+d");
+  }
+
+  toggleAutoPlay() {
+    if (this.refreshIntervalId == null || !this.state.autoPlay) {
+      this.refreshIntervalId = setInterval(() => this.playNextEvent(), 300);
+      this.setState({
+        autoPlay: true
+      });
+    } else {
+      clearInterval(this.refreshIntervalId);
+      this.refreshIntervalId = null;
+      this.setState({
+        autoPlay: false
+      });
+    }
+  }
+
+  playNextEvent() {
+    this.setState((prevState) => {
+      var nextIndex = prevState.selectedEventIndex + 1;
+      if (nextIndex == this.props.dataset.eventsToday.length) {
+        nextIndex = 0;
+      }
+
+      return {
+        selectedEventIndex: nextIndex,
+        timeTag: this.props.dataset.eventsToday[nextIndex]["timeTag"].format("MM/DD/YYYY HH:mm:ss")
+      };
+    })
   }
 
   sensorEventRowGetter = (info: Index) => {
@@ -127,12 +172,13 @@ class DatasetEventPage extends React.Component<TProps, TState> {
     }
   }
 
-  handleSensorEventSelect = (info: RowMouseEventHandlerParams) => {
+  handleSensorEventSelect = (info: RowMouseEventHandlerParams, timeTag: Moment) => {
     console.log("Selected sensor event: ", info.rowData);
     console.log("Selected Index:", info.index);
 
     this.setState({
-      selectedEventIndex: info.index
+      selectedEventIndex: info.index,
+      timeTag: timeTag.format("MM/DD/YYYY HH:mm:ss")
     });
   }
 
@@ -152,6 +198,9 @@ class DatasetEventPage extends React.Component<TProps, TState> {
               maxDate={dataset.endDate}
             ></DatePicker>
           </MuiPickersUtilsProvider>
+          <Typography align="right" style={{
+            marginLeft: "64px"
+          }}>{this.state.timeTag}</Typography>
         </div>
         <SplitPane className={classes.contentPane}
           ref={this.splitpaneRef}
@@ -175,6 +224,7 @@ class DatasetEventPage extends React.Component<TProps, TState> {
               sensorEvents={dataset.eventsToday}
               onRowClick={this.handleSensorEventSelect}
               rowClassName="odd"
+              selectedIndex={this.state.selectedEventIndex}
             ></SensorEventTable>
           </div>
           <div className={classes.floorPlan}>
