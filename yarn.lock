@@ -1238,6 +1238,11 @@
   dependencies:
     moment ">=2.14.0"
 
+"@types/mousetrap@^1.6.5":
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.6.8.tgz#448929e6dc21126392830465fdb9d4a2cfc16a88"
+  integrity sha512-zTqjvgCUT5EoXqbqmd8iJMb4NJqyV/V7pK7AIKq7qcaAsJIpGlTVJS1HQM6YkdHCdnkNSbhcQI7MXYxFfE3iCA==
+
 "@types/ncp@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/ncp/-/ncp-2.0.1.tgz#749432511f6ad747d04e98837b18cca9045567fb"
@@ -7421,9 +7426,9 @@ meow@^3.1.0, meow@^3.6.0:
     trim-newlines "^1.0.0"
 
 merge-deep@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/merge-deep/-/merge-deep-3.0.2.tgz#f39fa100a4f1bd34ff29f7d2bf4508fbb8d83ad2"
-  integrity sha512-T7qC8kg4Zoti1cFd8Cr0M+qaZfOwjlPDEdZIIPPB2JZctjaPM4fX+i7HOId69tAti2fvO6X5ldfYUONDODsrkA==
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/merge-deep/-/merge-deep-3.0.3.tgz#1a2b2ae926da8b2ae93a0ac15d90cd1922766003"
+  integrity sha512-qtmzAS6t6grwEkNrunqTBdn0qKwFgNWvlxUbAV8es9M7Ot1EbyApytCnvE0jALPa46ZpKDUo527kKiaWplmlFA==
   dependencies:
     arr-union "^3.1.0"
     clone-deep "^0.2.4"
@@ -7640,6 +7645,11 @@ moment-timezone@^0.5.23:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
+mousetrap@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
+  integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
