@@ -38,7 +38,7 @@
     "image-size": "^0.7.4",
     "lodash": "^4.17.11",
     "material-ui-pickers": "^2.2.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.23",
     "mousetrap": "^1.6.5",
     "ncp": "^2.0.0",
