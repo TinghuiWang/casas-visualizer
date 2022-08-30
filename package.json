@@ -39,7 +39,7 @@
     "lodash": "^4.17.11",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.23",
+    "moment-timezone": "^0.5.35",
     "mousetrap": "^1.6.5",
     "ncp": "^2.0.0",
     "prop-types": "^15.7.2",
